@@ -24,6 +24,10 @@ add_message_files(
   SModel_robot_input.msg
   SModel_robot_output.msg
 )
+add_service_files(DIRECTORY srv
+		FILES
+		GripperCommand.srv
+		)
 
 catkin_python_setup()
 
