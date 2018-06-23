@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(robotiq_ethercat)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# the following line is important. The SOEM is from my fork at https://github.com/gbyfbi/SOEM-1
 set(soem_INCLUDE_DIRS "/home/gao/Downloads/SOEM/install/include")
 set(CMAKE_VERBOSE_MAKEFILE on)
 find_package(catkin REQUIRED COMPONENTS
@@ -21,14 +22,15 @@ include_directories(include
   ## The following work around allows SOEM headers to include other SOEM headers.
   ## SOEM headers assume all headers are installed in a flat directory structure
   ## See https://github.com/smits/soem/issues/4 for more information.
-#  ${soem_INCLUDE_DIRS}/soem
-  ${soem_INCLUDE_DIRS}
+  ${soem_INCLUDE_DIRS}/soem
+#  ${soem_INCLUDE_DIRS}
 )
 
 add_library(robotiq_ethercat
  include/robotiq_ethercat/ethercat_manager.h
  src/ethercat_manager.cpp
 )
+# The following line is very important
 target_link_libraries(robotiq_ethercat "/home/gao/Downloads/SOEM/install/lib/libsoem.a")
 install(TARGETS robotiq_ethercat
    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
